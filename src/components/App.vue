@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-<h2>Todolist-vue</h2>
+<h2>vue-todolist-demo</h2>
 <input id="addinput" v-model="newItem" @keyup.enter="addNewItem"  placeholder="do what?" />
 
 <ul>
@@ -28,7 +28,14 @@ export default {
         newItem:''//打通input的标签
     }
   },
-
+  watch:{
+    items:{
+      handler:function(val){
+        Store.save(val)
+      },
+      deep:true
+    }
+  },
   methods:{
     addNewItem(){
       this.items.push({
@@ -39,7 +46,7 @@ export default {
       this.newItem=''
     },
     itemEnter(item){
-      item.showDelete=!item.showDelete      
+      item.showDelete=!item.showDelete
     },
     itemLeave(item){
       item.showDelete=!item.showDelete
@@ -49,18 +56,8 @@ export default {
     },
     deleteItem(index){
       this.items.splice(index,1)
-    },
-
-  watch:{
-    items:{
-      handler:function(val){
-        Store.save(val)
-      },
-      deep:true
     }
   }
-  }
- 
 }
 </script>
 
@@ -78,6 +75,8 @@ li{height:30px;}
   width: 650px;
   height: 35px;
   padding: 0 5px;
+  border: 1px solid gray;
+  border-radius: 2px;
 }
 .item-delete{
   display: inline;
